@@ -1,0 +1,16 @@
+horizontal_flip
+[ Train | 001/010 ] loss = 0.98195, acc = 0.81892
+Find best acc at epoch 1
+[ Train | 002/010 ] loss = 0.77946, acc = 0.84845
+Find best acc at epoch 2
+[ Train | 003/010 ] loss = 0.80783, acc = 0.83767
+[ Train | 004/010 ] loss = 1.07324, acc = 0.71993
+[ Train | 005/010 ] loss = 0.76283, acc = 0.80712
+[ Train | 006/010 ] loss = 0.46289, acc = 0.89927
+Find best acc at epoch 6
+[ Train | 007/010 ] loss = 0.48113, acc = 0.89012
+[ Train | 008/010 ] loss = 0.48876, acc = 0.88812
+[ Train | 009/010 ] loss = 0.46732, acc = 0.89533
+[ Train | 010/010 ] loss = 0.44624, acc = 0.89939
+Find best acc at epoch 10
+50000 50000 50000

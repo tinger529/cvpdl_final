@@ -1,0 +1,18 @@
+auto_augment
+[ Train | 001/010 ] loss = 1.04645, acc = 0.80438
+Find best acc at epoch 1
+[ Train | 002/010 ] loss = 0.78823, acc = 0.83459
+Find best acc at epoch 2
+[ Train | 003/010 ] loss = 1.29774, acc = 0.69014
+[ Train | 004/010 ] loss = 0.69587, acc = 0.85277
+Find best acc at epoch 4
+[ Train | 005/010 ] loss = 0.63700, acc = 0.85787
+Find best acc at epoch 5
+[ Train | 006/010 ] loss = 0.46677, acc = 0.90393
+Find best acc at epoch 6
+[ Train | 007/010 ] loss = 0.54843, acc = 0.87536
+[ Train | 008/010 ] loss = 0.49609, acc = 0.88012
+[ Train | 009/010 ] loss = 0.43689, acc = 0.89911
+[ Train | 010/010 ] loss = 0.40652, acc = 0.91223
+Find best acc at epoch 10
+50000 50000 50000
