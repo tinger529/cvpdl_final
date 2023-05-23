@@ -43,7 +43,7 @@ def apply(x, ops):
 class CTAugment:
     def __init__(self, depth=2, th=0.85, decay=0.99):
         self.decay = decay
-        self.depth = depth
+        self.depth = depth # number of augmentation to apply for each image
         self.th = th
         self.rates = {}
         for k, op in OPS.items():
@@ -55,12 +55,12 @@ class CTAugment:
         p[p < self.th] = 0
         return p
 
-    def policy(self, probe):
+    def policy(self, probe): # randomly generate 
         kl = list(OPS.keys())
         v = []
         if probe:
             for _ in range(self.depth):
-                k = random.choice(kl)
+                k = random.choice(kl) # randomly choose 1 augmentation
                 bins = self.rates[k]
                 rnd = np.random.uniform(0, 1, len(bins))
                 v.append(OP(k, rnd.tolist()))
@@ -126,8 +126,24 @@ def contrast(x, contrast):
     return _enhance(x, ImageEnhance.Contrast, contrast)
 
 
+# @register(17)
+# def cutout(x, level):
+#     """Apply cutout to pil_img at the specified level."""
+#     size = 1 + int(level * min(x.size) * 0.499)
+#     img_height, img_width = x.size
+#     height_loc = np.random.randint(low=0, high=img_height)
+#     width_loc = np.random.randint(low=0, high=img_width)
+#     upper_coord = (max(0, height_loc - size // 2), max(0, width_loc - size // 2))
+#     lower_coord = (min(img_height, height_loc + size // 2), min(img_width, width_loc + size // 2))
+#     pixels = x.load()  # create the pixel map
+#     for i in range(upper_coord[0], lower_coord[0]):  # for every col:
+#         for j in range(upper_coord[1], lower_coord[1]):  # For every row
+#             pixels[i, j] = (127, 127, 127)  # set the color accordingly
+#     return x
+
+
 @register(17)
-def cutout(x, level):
+def cutout(x, level): # cutout but fill with mean
     """Apply cutout to pil_img at the specified level."""
     size = 1 + int(level * min(x.size) * 0.499)
     img_height, img_width = x.size
@@ -135,10 +151,13 @@ def cutout(x, level):
     width_loc = np.random.randint(low=0, high=img_width)
     upper_coord = (max(0, height_loc - size // 2), max(0, width_loc - size // 2))
     lower_coord = (min(img_height, height_loc + size // 2), min(img_width, width_loc + size // 2))
+    
+    p = np.array(x)[upper_coord[0]:lower_coord[0], upper_coord[1]:lower_coord[1]]
+    p = tuple(np.mean(p,axis=(0,1), dtype=int))
     pixels = x.load()  # create the pixel map
     for i in range(upper_coord[0], lower_coord[0]):  # for every col:
         for j in range(upper_coord[1], lower_coord[1]):  # For every row
-            pixels[i, j] = (127, 127, 127)  # set the color accordingly
+            pixels[i, j] = p  # set the color accordingly
     return x
 
 
@@ -209,11 +228,11 @@ def solarize(x, th):
 
 @register(17)
 def translate_x(x, delta):
-    delta = (2 * delta - 1) * 0.3
+    delta = (2 * delta - 1) * 0.5 * x.size[0]
     return x.transform(x.size, Image.AFFINE, (1, 0, delta, 0, 1, 0))
 
 
 @register(17)
 def translate_y(x, delta):
-    delta = (2 * delta - 1) * 0.3
+    delta = (2 * delta - 1) * 0.5 * x.size[1]
     return x.transform(x.size, Image.AFFINE, (1, 0, 0, 0, 1, delta))

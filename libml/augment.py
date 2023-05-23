@@ -407,7 +407,8 @@ def pair_augment_function(dataset: str):
     augmentations = FLAGS.augment.split('.')
     assert len(augmentations) == 3
     unlabeled = [get_augmentation(dataset, x) for x in augmentations[1:]]
-    return [get_augmentation(dataset, augmentations[0]),
+    return [get_augmentation(dataset, augmentations[0]), # augmentation for labeled dataset
+            # weak and strong augmentation
             AugmentPair(tf=stack_augment([x.tf for x in unlabeled]), numpy=unlabeled[-1].numpy)]
 
 

@@ -114,7 +114,8 @@ class FixMatch(CTAReMixMatch):
         loss_xeu = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=tf.argmax(pseudo_labels, axis=1),
                                                                   logits=logits_strong)
         pseudo_mask = tf.to_float(tf.reduce_max(pseudo_labels, axis=1) >= confidence)
-        tf.summary.scalar('monitors/mask', tf.reduce_mean(pseudo_mask))
+        # proportion of high confidence pseudo labels
+        tf.summary.scalar('monitors/mask', tf.reduce_mean(pseudo_mask)) 
         loss_xeu = tf.reduce_mean(loss_xeu * pseudo_mask)
         tf.summary.scalar('losses/xeu', loss_xeu)
 
@@ -139,9 +140,9 @@ class FixMatch(CTAReMixMatch):
 
 
 def main(argv):
-    utils.setup_main()
+    utils.setup_main() # does nothing
     del argv  # Unused.
-    dataset = data.PAIR_DATASETS()[FLAGS.dataset]()
+    dataset = data.PAIR_DATASETS()[FLAGS.dataset]() # create the dataset based on FLAGS.dataset
     log_width = utils.ilog2(dataset.width)
     model = FixMatch(
         os.path.join(FLAGS.train_dir, dataset.name, FixMatch.cta_name()),
