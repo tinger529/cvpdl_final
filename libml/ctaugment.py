@@ -192,11 +192,18 @@ def rescale(x, scale, method):
     return x.crop(crop).resize(x.size, method)
 
 
-@register(17)
-def rotate(x, angle):
-    angle = int(np.round((2 * angle - 1) * 45))
-    return x.rotate(angle)
+# @register(17)
+# def rotate(x, angle):
+#     angle = int(np.round((2 * angle - 1) * 45))
+#     return x.rotate(angle)
 
+@register(17)
+def rotate_fill(x, angle):
+    x = x.convert("RGBA")
+    angle = int(np.round((2 * angle - 1) * 45))
+    rotated = x.rotate(angle, fillcolor=0, resample=Image.Resampling.BILINEAR)
+    x.paste(rotated, mask=rotated)
+    return x.convert("RGB")
 
 @register(17)
 def sharpness(x, sharpness):
