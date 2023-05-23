@@ -1,0 +1,16 @@
+gaussion_blur
+[ Train | 001/010 ] loss = 0.87329, acc = 0.83975
+Find best acc at epoch 1
+[ Train | 002/010 ] loss = 0.72506, acc = 0.85645
+Find best acc at epoch 2
+[ Train | 003/010 ] loss = 1.01147, acc = 0.76012
+[ Train | 004/010 ] loss = 1.45076, acc = 0.61178
+[ Train | 005/010 ] loss = 0.91559, acc = 0.76234
+[ Train | 006/010 ] loss = 0.50133, acc = 0.90191
+Find best acc at epoch 6
+[ Train | 007/010 ] loss = 0.48802, acc = 0.89721
+[ Train | 008/010 ] loss = 0.58251, acc = 0.85003
+[ Train | 009/010 ] loss = 0.43215, acc = 0.89541
+[ Train | 010/010 ] loss = 0.40187, acc = 0.90765
+Find best acc at epoch 10
+50000 50000 50000

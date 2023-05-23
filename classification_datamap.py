@@ -19,7 +19,7 @@ def parse_arguments():
     parser.add_argument('--data_dir', type=str, default='./cifar10_dataset')
     parser.add_argument('--model_dir', type=str, default='./models')
     parser.add_argument('--datamap_dir', type=str, default='./datamap')
-    parser.add_argument('--tfm_type', type=str, default='auto_augment')
+    parser.add_argument('--tfm_type', type=str, default='random_rotation')
     parser.add_argument('--seed', type=str, default=0)
     parser.add_argument('--valid_ratio', type=float, default=0.1)
     parser.add_argument('--batch_size', type=int, default=32)
@@ -49,8 +49,10 @@ def get_transform(tfm_type):
 
     tfm_dict = {
         'horizontal_flip': transforms.RandomHorizontalFlip(p=0.5),
+        'random_rotation': transforms.RandomRotation(30, expand=False, center=(16, 16)),
         'color_jitter': transforms.ColorJitter(brightness=(0, 5), contrast=(0, 5), saturation=(0, 5), hue=(-0.1, 0.1)),
         'auto_augment': transforms.AutoAugment(policy=torchvision.transforms.autoaugment.AutoAugmentPolicy.CIFAR10),
+        'gaussion_blur': transforms.GaussianBlur(7,3),
     }
     tfm = tfm_dict[tfm_type]
 
