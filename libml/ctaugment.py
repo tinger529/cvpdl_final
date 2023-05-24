@@ -233,13 +233,50 @@ def solarize(x, th):
     return ImageOps.solarize(x, th)
 
 
-@register(17)
-def translate_x(x, delta):
-    delta = (2 * delta - 1) * 0.5 * x.size[0]
-    return x.transform(x.size, Image.AFFINE, (1, 0, delta, 0, 1, 0))
+# @register(17)
+# def translate_x(x, delta):
+#     delta = (2 * delta - 1) * 0.5 * x.size[0]
+#     return x.transform(x.size, Image.AFFINE, (1, 0, delta, 0, 1, 0))
 
 
+# @register(17)
+# def translate_y(x, delta):
+#     delta = (2 * delta - 1) * 0.5 * x.size[1]
+#     return x.transform(x.size, Image.AFFINE, (1, 0, 0, 0, 1, delta))
+
 @register(17)
-def translate_y(x, delta):
-    delta = (2 * delta - 1) * 0.5 * x.size[1]
-    return x.transform(x.size, Image.AFFINE, (1, 0, 0, 0, 1, delta))
+def translate_fill_x(image, delta):
+    width, height = image.size
+    rotate_amount = int((2 * delta - 1) * 0.5 * image.size[0])
+    rotate_amount = rotate_amount % width  # Ensure the rotation amount is within the image width
+
+    # Split the image into two parts: the shifted part and the remaining part
+    shifted_part = image.crop((0, 0, rotate_amount, height))
+    remaining_part = image.crop((rotate_amount, 0, width, height))
+
+    # Create a new image with the same size as the original image
+    new_image = Image.new("RGB", (width, height))
+
+    # Paste the remaining part first
+    new_image.paste(remaining_part, (0, 0))
+
+    # Paste the shifted part at the opposite side
+    new_image.paste(shifted_part, (width - rotate_amount, 0))
+
+    return new_image
+
+@register(17)
+def translate_fill_y(image, delta):
+    width, height = image.size
+    rotate_amount = int((2 * delta - 1) * 0.5 * image.size[1])
+    rotate_amount = rotate_amount % height  # Ensure the rotation amount is within the image width
+
+    shifted_part = image.crop((0, 0, width, rotate_amount))
+    remaining_part = image.crop((0, rotate_amount, width, height))
+
+    new_image = Image.new("RGB", (width, height))
+
+    new_image.paste(remaining_part, (0, 0))
+    new_image.paste(shifted_part, (0, height-rotate_amount))
+
+    return new_image
