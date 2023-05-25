@@ -210,16 +210,33 @@ def sharpness(x, sharpness):
     return _enhance(x, ImageEnhance.Sharpness, sharpness)
 
 
+# @register(17)
+# def shear_x(x, shear):
+#     shear = (2 * shear - 1) * 0.3
+#     return x.transform(x.size, Image.AFFINE, (1, shear, 0, 0, 1, 0))
+
+
+# @register(17)
+# def shear_y(x, shear):
+#     shear = (2 * shear - 1) * 0.3
+#     return x.transform(x.size, Image.AFFINE, (1, 0, 0, shear, 1, 0))
+
 @register(17)
-def shear_x(x, shear):
+def shear_fill_x(x, shear):
+    x = x.convert("RGBA")
     shear = (2 * shear - 1) * 0.3
-    return x.transform(x.size, Image.AFFINE, (1, shear, 0, 0, 1, 0))
+    sheared = x.transform(x.size, Image.AFFINE, (1, shear, 0, 0, 1, 0))
+    x.paste(sheared, mask=sheared)
+    return x.convert("RGB")
 
 
 @register(17)
-def shear_y(x, shear):
+def shear_fill_y(x, shear):
+    x = x.convert("RGBA")
     shear = (2 * shear - 1) * 0.3
-    return x.transform(x.size, Image.AFFINE, (1, 0, 0, shear, 1, 0))
+    sheared = x.transform(x.size, Image.AFFINE, (1, 0, 0, shear, 1, 0))
+    x.paste(sheared, mask=sheared)
+    return x.convert("RGB")
 
 
 @register(17)
