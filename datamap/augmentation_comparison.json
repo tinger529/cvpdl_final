@@ -1,0 +1,46 @@
+{
+    "invert": {
+        "conf_delta": -0.0156362357601917,
+        "var_delta": 0.01769198551241322
+    },
+    "random_rotation": {
+        "conf_delta": 0.018776532829311042,
+        "var_delta": -0.025000844888050225
+    },
+    "auto_contrast": {
+        "conf_delta": 0.031148110054108228,
+        "var_delta": -0.0267885826759947
+    },
+    "cutout": {
+        "conf_delta": 0.004166626240341568,
+        "var_delta": -0.02181812176763242
+    },
+    "posterize": {
+        "conf_delta": 0.026210054465894563,
+        "var_delta": -0.027031476274801194
+    },
+    "color_jitter": {
+        "conf_delta": 0.0051969487852363975,
+        "var_delta": -0.019589447299137638
+    },
+    "gaussian_blur": {
+        "conf_delta": -0.030199560131721582,
+        "var_delta": 0.04549332808742407
+    },
+    "equalize": {
+        "conf_delta": 0.0002823695952036424,
+        "var_delta": 0.0030914569741392586
+    },
+    "auto_augment": {
+        "conf_delta": -0.001293278842007018,
+        "var_delta": 0.01382787655589274
+    },
+    "translate_fill_x": {
+        "conf_delta": 0.023951233240334862,
+        "var_delta": -0.04009819911704214
+    },
+    "horizontal_flip": {
+        "conf_delta": -0.005325444981472939,
+        "var_delta": 0.0004046216453752117
+    }
+}

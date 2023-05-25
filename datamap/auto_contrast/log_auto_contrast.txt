@@ -1,0 +1,15 @@
+auto_contrast
+[ Train | 001/010 ] loss = 0.86723, acc = 0.84949
+Find best acc at epoch 1
+[ Train | 002/010 ] loss = 0.74414, acc = 0.83653
+[ Train | 003/010 ] loss = 0.80041, acc = 0.81610
+[ Train | 004/010 ] loss = 0.80860, acc = 0.79978
+[ Train | 005/010 ] loss = 0.59861, acc = 0.86554
+Find best acc at epoch 5
+[ Train | 006/010 ] loss = 0.43603, acc = 0.91749
+Find best acc at epoch 6
+[ Train | 007/010 ] loss = 0.46287, acc = 0.90015
+[ Train | 008/010 ] loss = 0.45415, acc = 0.90423
+[ Train | 009/010 ] loss = 0.45091, acc = 0.90839
+[ Train | 010/010 ] loss = 0.44686, acc = 0.90525
+50000 50000 50000

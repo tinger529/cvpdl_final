@@ -1,3 +1,4 @@
+import albumentations as A
 import glob
 import json
 import os
@@ -19,7 +20,7 @@ def parse_arguments():
     parser.add_argument('--data_dir', type=str, default='./cifar10_dataset')
     parser.add_argument('--model_dir', type=str, default='./models')
     parser.add_argument('--datamap_dir', type=str, default='./datamap')
-    parser.add_argument('--tfm_type', type=str, default='random_rotation')
+    parser.add_argument('--tfm_type', type=str, default='equalize')
     parser.add_argument('--seed', type=str, default=0)
     parser.add_argument('--valid_ratio', type=float, default=0.1)
     parser.add_argument('--batch_size', type=int, default=32)
@@ -39,10 +40,47 @@ def set_seed(seed=0):
         torch.cuda.manual_seed_all(seed)
     return
 
+def cutout(x, level):
+    """Apply cutout to pil_img at the specified level."""
+    size = 1 + int(level * min(x.size) * 0.499)
+    img_height, img_width = x.size
+    height_loc = np.random.randint(low=0, high=img_height)
+    width_loc = np.random.randint(low=0, high=img_width)
+    upper_coord = (max(0, height_loc - size // 2), max(0, width_loc - size // 2))
+    lower_coord = (min(img_height, height_loc + size // 2), min(img_width, width_loc + size // 2))
+    x = x.copy()
+    pixels = x.load()  # create the pixel map
+    p = np.array(x)[upper_coord[0]:lower_coord[0], upper_coord[1]:lower_coord[1]]
+    p = tuple(np.mean(p,axis=(0,1), dtype=int))
+    for i in range(upper_coord[0], lower_coord[0]):  # for every col:
+        for j in range(upper_coord[1], lower_coord[1]):  # For every row
+            pixels[i, j] = p  # set the color accordingly
+    return x
+
+def translate_fill_x(image, delta):
+    width, height = image.size
+    rotate_amount = int((2 * delta - 1) * 0.5 * image.size[0])
+    rotate_amount = rotate_amount % width  # Ensure the rotation amount is within the image width
+
+    # Split the image into two parts: the shifted part and the remaining part
+    shifted_part = image.crop((0, 0, rotate_amount, height))
+    remaining_part = image.crop((rotate_amount, 0, width, height))
+
+    # Create a new image with the same size as the original image
+    new_image = Image.new("RGB", (width, height))
+
+    # Paste the remaining part first
+    new_image.paste(remaining_part, (0, 0))
+
+    # Paste the shifted part at the opposite side
+    new_image.paste(shifted_part, (width - rotate_amount, 0))
+
+    return new_image
+
 def get_transform(tfm_type):
     print(tfm_type)
 
-    if tfm_type == 'none':
+    if tfm_type == 'none' or tfm_type == 'cutout' or tfm_type == 'translate_fill_x':
         return transforms.Compose([
             transforms.ToTensor(),
         ])
@@ -53,6 +91,10 @@ def get_transform(tfm_type):
         'color_jitter': transforms.ColorJitter(brightness=(0, 5), contrast=(0, 5), saturation=(0, 5), hue=(-0.1, 0.1)),
         'auto_augment': transforms.AutoAugment(policy=torchvision.transforms.autoaugment.AutoAugmentPolicy.CIFAR10),
         'gaussion_blur': transforms.GaussianBlur(7,3),
+        'auto_contrast': transforms.RandomAutocontrast(p=0.5),
+        'posterize': transforms.RandomPosterize(bits=4, p=0.5),
+        'invert': transforms.RandomInvert(p=0.5),
+        'equalize': transforms.RandomEqualize(p=0.5),
     }
     tfm = tfm_dict[tfm_type]
 
@@ -62,10 +104,11 @@ def get_transform(tfm_type):
     ])
 
 class Cifar10Dataset(Dataset):
-    def __init__(self, fnames, transform=None):
+    def __init__(self, fnames, transform=None, tfm_type=None):
         super(Cifar10Dataset).__init__()
         self.fnames = fnames
         self.transform = transform
+        self.tfm_type = tfm_type
 
     def __len__(self):
         return len(self.fnames)
@@ -73,6 +116,11 @@ class Cifar10Dataset(Dataset):
     def __getitem__(self, idx):
         fname = self.fnames[idx]
         img = Image.open(fname)
+        
+        if self.tfm_type == 'cutout':
+            img = cutout(img, 1)
+        elif self.tfm_type == 'translate_fill_x':
+            img = translate_fill_x(img, 1)
         img = self.transform(img)
 
         label = fname.split('/')[-2]
@@ -84,7 +132,8 @@ def get_dataloader(data_dir, tfm_type, valid_ratio, batch_size):
     fnames = glob.glob(f'{data_dir}/**/*.png')
 
     dataset = Cifar10Dataset(fnames=fnames, 
-                             transform=get_transform(tfm_type))
+                             transform=get_transform(tfm_type),
+                             tfm_type=tfm_type)
 
     sampler = SequentialSampler(dataset)
 
