@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('--tfm_type', type=str, default='translate_fill_x')
+    parser.add_argument('--tfm_type', type=str, default='solarize')
     parser.add_argument('--datamap_dir', type=str, default='./datamap')
     args = parser.parse_args()
     return args
@@ -25,7 +25,7 @@ def main(args):
     fig = plt.figure(figsize=(14, 10), )
     sns.scatterplot(x='gold_prob_stds', y='gold_prob_means', data=datamap, palette=pal, hue='correct', s=10)
 
-    plt.title(f'Translate X (fill)')
+    plt.title(f'Solarize')
     plt.xlabel('variability')
     plt.ylabel('confidence')
     plt.savefig(os.path.join(args.datamap_dir, f'{args.tfm_type}.png'))

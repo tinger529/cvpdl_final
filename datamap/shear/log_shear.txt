@@ -1,0 +1,18 @@
+sheer
+[ Train | 001/010 ] loss = 1.01282, acc = 0.81258
+Find best acc at epoch 1
+[ Train | 002/010 ] loss = 0.63502, acc = 0.87862
+Find best acc at epoch 2
+[ Train | 003/010 ] loss = 0.92634, acc = 0.77979
+[ Train | 004/010 ] loss = 1.04077, acc = 0.75658
+[ Train | 005/010 ] loss = 0.75499, acc = 0.80424
+[ Train | 006/010 ] loss = 0.57889, acc = 0.85109
+[ Train | 007/010 ] loss = 0.42095, acc = 0.90865
+Find best acc at epoch 7
+[ Train | 008/010 ] loss = 0.38118, acc = 0.91299
+Find best acc at epoch 8
+[ Train | 009/010 ] loss = 0.37767, acc = 0.91363
+Find best acc at epoch 9
+[ Train | 010/010 ] loss = 0.37800, acc = 0.91415
+Find best acc at epoch 10
+50000 50000 50000

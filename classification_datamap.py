@@ -20,7 +20,7 @@ def parse_arguments():
     parser.add_argument('--data_dir', type=str, default='./cifar10_dataset')
     parser.add_argument('--model_dir', type=str, default='./models')
     parser.add_argument('--datamap_dir', type=str, default='./datamap')
-    parser.add_argument('--tfm_type', type=str, default='equalize')
+    parser.add_argument('--tfm_type', type=str, default='solarize')
     parser.add_argument('--seed', type=str, default=0)
     parser.add_argument('--valid_ratio', type=float, default=0.1)
     parser.add_argument('--batch_size', type=int, default=32)
@@ -95,6 +95,9 @@ def get_transform(tfm_type):
         'posterize': transforms.RandomPosterize(bits=4, p=0.5),
         'invert': transforms.RandomInvert(p=0.5),
         'equalize': transforms.RandomEqualize(p=0.5),
+        'sharpness': transforms.RandomAdjustSharpness(sharpness_factor=0.5, p=0.5),
+        'sheer': transforms.RandomAffine(degrees=0, shear=0.3),
+        'solarize': transforms.RandomSolarize(threshold=200.0, p=0.5)
     }
     tfm = tfm_dict[tfm_type]
 

@@ -23,6 +23,10 @@
         "conf_delta": 0.0051969487852363975,
         "var_delta": -0.019589447299137638
     },
+    "sharpness": {
+        "conf_delta": -0.019156909699213763,
+        "var_delta": 0.030975650406657687
+    },
     "gaussian_blur": {
         "conf_delta": -0.030199560131721582,
         "var_delta": 0.04549332808742407
@@ -30,6 +34,14 @@
     "equalize": {
         "conf_delta": 0.0002823695952036424,
         "var_delta": 0.0030914569741392586
+    },
+    "solarize": {
+        "conf_delta": -0.02058980143549706,
+        "var_delta": -0.0039747414655909785
+    },
+    "shear": {
+        "conf_delta": 0.0,
+        "var_delta": 0.0
     },
     "auto_augment": {
         "conf_delta": -0.001293278842007018,
