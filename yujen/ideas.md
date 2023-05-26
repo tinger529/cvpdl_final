@@ -42,6 +42,9 @@
 + rotate_fill: not bad but no significant improvement
     + it seems to allow larger rotate angle
 + translate_fill: seems to allow larger probability to be assigned to larger translation
++ solarize seems strong, the weights are low in early epochs.
+    + Perhaps remove it??
+    + large angle rotate may also be removed?
 
 
 + since CTAugment can automatically zero out too strong augmentations, 

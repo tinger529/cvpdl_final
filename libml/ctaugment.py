@@ -297,3 +297,11 @@ def translate_fill_y(image, delta):
     new_image.paste(shifted_part, (0, height-rotate_amount))
 
     return new_image
+
+@register(17)
+def gaussian_noise(x, delta):
+    img = np.array(x)
+    scale = 20 * delta
+    img = img + np.random.normal(0,scale,size=img.shape)
+    img = img.clip(0,255).astype(np.uint8)
+    return Image.fromarray(img)
