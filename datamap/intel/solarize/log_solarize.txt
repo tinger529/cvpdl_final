@@ -1,0 +1,31 @@
+solarize
+[ Train | 001/020 ] loss = 1.31674, acc = 0.67689
+Find best acc at epoch 1
+[ Train | 002/020 ] loss = 1.07187, acc = 0.71370
+Find best acc at epoch 2
+[ Train | 003/020 ] loss = 1.06140, acc = 0.72715
+Find best acc at epoch 3
+[ Train | 004/020 ] loss = 0.98085, acc = 0.74310
+Find best acc at epoch 4
+[ Train | 005/020 ] loss = 1.14570, acc = 0.64102
+[ Train | 006/020 ] loss = 1.03105, acc = 0.68173
+[ Train | 007/020 ] loss = 0.76361, acc = 0.80196
+Find best acc at epoch 7
+[ Train | 008/020 ] loss = 0.78316, acc = 0.80752
+Find best acc at epoch 8
+[ Train | 009/020 ] loss = 0.77029, acc = 0.80353
+[ Train | 010/020 ] loss = 0.89985, acc = 0.72309
+[ Train | 011/020 ] loss = 0.75120, acc = 0.80588
+[ Train | 012/020 ] loss = 0.68117, acc = 0.80851
+Find best acc at epoch 12
+[ Train | 013/020 ] loss = 0.71123, acc = 0.80503
+[ Train | 014/020 ] loss = 0.62064, acc = 0.83820
+Find best acc at epoch 14
+[ Train | 015/020 ] loss = 0.64259, acc = 0.84090
+Find best acc at epoch 15
+[ Train | 016/020 ] loss = 0.75251, acc = 0.81314
+[ Train | 017/020 ] loss = 0.70307, acc = 0.82382
+[ Train | 018/020 ] loss = 0.69420, acc = 0.82901
+[ Train | 019/020 ] loss = 0.61682, acc = 0.83727
+[ Train | 020/020 ] loss = 0.63079, acc = 0.82631
+14034 14034 14034

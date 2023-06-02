@@ -1,0 +1,28 @@
+sharpness
+[ Train | 001/020 ] loss = 1.28565, acc = 0.70053
+Find best acc at epoch 1
+[ Train | 002/020 ] loss = 1.07766, acc = 0.69241
+[ Train | 003/020 ] loss = 0.83391, acc = 0.80802
+Find best acc at epoch 3
+[ Train | 004/020 ] loss = 0.91339, acc = 0.79591
+[ Train | 005/020 ] loss = 0.93848, acc = 0.76609
+[ Train | 006/020 ] loss = 0.89062, acc = 0.77890
+[ Train | 007/020 ] loss = 0.85933, acc = 0.77976
+[ Train | 008/020 ] loss = 0.97492, acc = 0.72323
+[ Train | 009/020 ] loss = 0.87494, acc = 0.76623
+[ Train | 010/020 ] loss = 0.77796, acc = 0.77911
+[ Train | 011/020 ] loss = 0.79439, acc = 0.77712
+[ Train | 012/020 ] loss = 0.69867, acc = 0.81115
+Find best acc at epoch 12
+[ Train | 013/020 ] loss = 0.74661, acc = 0.79179
+[ Train | 014/020 ] loss = 0.73903, acc = 0.79819
+[ Train | 015/020 ] loss = 0.69959, acc = 0.82866
+Find best acc at epoch 15
+[ Train | 016/020 ] loss = 0.63826, acc = 0.83934
+Find best acc at epoch 16
+[ Train | 017/020 ] loss = 0.64843, acc = 0.83151
+[ Train | 018/020 ] loss = 0.63434, acc = 0.83359
+[ Train | 019/020 ] loss = 0.63457, acc = 0.84667
+Find best acc at epoch 19
+[ Train | 020/020 ] loss = 0.63655, acc = 0.83962
+14034 14034 14034

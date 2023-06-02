@@ -1,0 +1,30 @@
+random_rotation
+[ Train | 001/020 ] loss = 1.12890, acc = 0.74459
+Find best acc at epoch 1
+[ Train | 002/020 ] loss = 0.89811, acc = 0.78218
+Find best acc at epoch 2
+[ Train | 003/020 ] loss = 1.08659, acc = 0.72010
+[ Train | 004/020 ] loss = 0.94997, acc = 0.76175
+[ Train | 005/020 ] loss = 1.02089, acc = 0.71384
+[ Train | 006/020 ] loss = 1.01827, acc = 0.68188
+[ Train | 007/020 ] loss = 0.90806, acc = 0.72772
+[ Train | 008/020 ] loss = 0.92213, acc = 0.74708
+[ Train | 009/020 ] loss = 0.78820, acc = 0.79534
+Find best acc at epoch 9
+[ Train | 010/020 ] loss = 0.78121, acc = 0.80830
+Find best acc at epoch 10
+[ Train | 011/020 ] loss = 0.75986, acc = 0.80360
+[ Train | 012/020 ] loss = 0.73443, acc = 0.79385
+[ Train | 013/020 ] loss = 0.71389, acc = 0.81278
+Find best acc at epoch 13
+[ Train | 014/020 ] loss = 0.68110, acc = 0.82296
+Find best acc at epoch 14
+[ Train | 015/020 ] loss = 0.66521, acc = 0.82239
+[ Train | 016/020 ] loss = 0.65624, acc = 0.81962
+[ Train | 017/020 ] loss = 0.61357, acc = 0.82987
+Find best acc at epoch 17
+[ Train | 018/020 ] loss = 0.71336, acc = 0.78694
+[ Train | 019/020 ] loss = 0.68977, acc = 0.78125
+[ Train | 020/020 ] loss = 0.59102, acc = 0.83962
+Find best acc at epoch 20
+14034 14034 14034

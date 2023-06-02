@@ -17,14 +17,14 @@ from torch.utils.data import Dataset, DataLoader, random_split, SequentialSample
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='./cifar10_dataset')
-    parser.add_argument('--model_dir', type=str, default='./models')
-    parser.add_argument('--datamap_dir', type=str, default='./datamap')
-    parser.add_argument('--tfm_type', type=str, default='solarize')
+    parser.add_argument('--data_dir', type=str, default='./Intel')
+    parser.add_argument('--model_dir', type=str, default='./models/intel')
+    parser.add_argument('--datamap_dir', type=str, default='./datamap/intel')
+    parser.add_argument('--tfm_type', type=str, default='cutout')
     parser.add_argument('--seed', type=str, default=0)
     parser.add_argument('--valid_ratio', type=float, default=0.1)
     parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--n_epochs', type=int, default=10)
+    parser.add_argument('--n_epochs', type=int, default=20)
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', type=int, default=1e-5)
     args, unknown = parser.parse_known_args()
@@ -54,7 +54,7 @@ def cutout(x, level):
     p = tuple(np.mean(p,axis=(0,1), dtype=int))
     for i in range(upper_coord[0], lower_coord[0]):  # for every col:
         for j in range(upper_coord[1], lower_coord[1]):  # For every row
-            pixels[i, j] = p  # set the color accordingly
+            pixels[i, j] = 0  # set the color accordingly
     return x
 
 def translate_fill_x(image, delta):
@@ -82,6 +82,7 @@ def get_transform(tfm_type):
 
     if tfm_type == 'none' or tfm_type == 'cutout' or tfm_type == 'translate_fill_x':
         return transforms.Compose([
+            transforms.Resize((32, 32)),
             transforms.ToTensor(),
         ])
 
@@ -89,7 +90,7 @@ def get_transform(tfm_type):
         'horizontal_flip': transforms.RandomHorizontalFlip(p=0.5),
         'random_rotation': transforms.RandomRotation(30, expand=False, center=(16, 16)),
         'color_jitter': transforms.ColorJitter(brightness=(0, 5), contrast=(0, 5), saturation=(0, 5), hue=(-0.1, 0.1)),
-        'auto_augment': transforms.AutoAugment(policy=torchvision.transforms.autoaugment.AutoAugmentPolicy.CIFAR10),
+        'auto_augment': transforms.AutoAugment(policy=torchvision.transforms.autoaugment.AutoAugmentPolicy.IMAGENET),
         'gaussion_blur': transforms.GaussianBlur(7,3),
         'auto_contrast': transforms.RandomAutocontrast(p=0.5),
         'posterize': transforms.RandomPosterize(bits=4, p=0.5),
@@ -103,6 +104,7 @@ def get_transform(tfm_type):
 
     return transforms.Compose([
         tfm,
+        transforms.Resize((32, 32)),
         transforms.ToTensor(),
     ])
 
@@ -112,6 +114,14 @@ class Cifar10Dataset(Dataset):
         self.fnames = fnames
         self.transform = transform
         self.tfm_type = tfm_type
+        self.label2id = {
+            'buildings': 0,
+            'forest': 1,
+            'glacier': 2,
+            'mountain': 3,
+            'sea': 4,
+            'street': 5 
+        }
 
     def __len__(self):
         return len(self.fnames)
@@ -128,11 +138,11 @@ class Cifar10Dataset(Dataset):
 
         label = fname.split('/')[-2]
         
-        return img, int(label)
+        return img, self.label2id[label]
 
 def get_dataloader(data_dir, tfm_type, valid_ratio, batch_size):
-    data_dir = os.path.join(data_dir, 'train')
-    fnames = glob.glob(f'{data_dir}/**/*.png')
+    data_dir = os.path.join(data_dir, 'seg_train', 'seg_train')
+    fnames = glob.glob(f'{data_dir}/**/*.jpg')
 
     dataset = Cifar10Dataset(fnames=fnames, 
                              transform=get_transform(tfm_type),
@@ -203,7 +213,7 @@ def main(args):
                                         valid_ratio=args.valid_ratio,
                                         batch_size=args.batch_size)
     
-    model = get_model(n_classes=10)
+    model = get_model(n_classes=6)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = model.to(device)
 

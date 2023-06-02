@@ -1,0 +1,29 @@
+auto_contrast
+[ Train | 001/020 ] loss = 1.18407, acc = 0.71170
+Find best acc at epoch 1
+[ Train | 002/020 ] loss = 1.37316, acc = 0.60500
+[ Train | 003/020 ] loss = 0.81627, acc = 0.81122
+Find best acc at epoch 3
+[ Train | 004/020 ] loss = 1.04143, acc = 0.70935
+[ Train | 005/020 ] loss = 0.86291, acc = 0.79200
+[ Train | 006/020 ] loss = 0.92199, acc = 0.75634
+[ Train | 007/020 ] loss = 0.99207, acc = 0.70095
+[ Train | 008/020 ] loss = 0.71674, acc = 0.80923
+[ Train | 009/020 ] loss = 0.68459, acc = 0.80951
+[ Train | 010/020 ] loss = 0.69309, acc = 0.82311
+Find best acc at epoch 10
+[ Train | 011/020 ] loss = 0.75934, acc = 0.80602
+[ Train | 012/020 ] loss = 0.68002, acc = 0.82531
+Find best acc at epoch 12
+[ Train | 013/020 ] loss = 0.76662, acc = 0.79200
+[ Train | 014/020 ] loss = 0.83056, acc = 0.78524
+[ Train | 015/020 ] loss = 0.77468, acc = 0.80140
+[ Train | 016/020 ] loss = 0.67269, acc = 0.83215
+Find best acc at epoch 16
+[ Train | 017/020 ] loss = 0.65151, acc = 0.83307
+Find best acc at epoch 17
+[ Train | 018/020 ] loss = 0.65592, acc = 0.83670
+Find best acc at epoch 18
+[ Train | 019/020 ] loss = 0.66981, acc = 0.83129
+[ Train | 020/020 ] loss = 0.68442, acc = 0.82987
+14034 14034 14034

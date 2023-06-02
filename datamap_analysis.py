@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('--datamap_dir', type=str, default='./datamap')
+    parser.add_argument('--datamap_dir', type=str, default='./datamap/intel')
     parser.add_argument('--save_fname', type=str, default='augmentation_comparison.json')
     args, unknown = parser.parse_known_args()
     return args
@@ -43,9 +43,6 @@ def main(args):
     
     with open(os.path.join(args.datamap_dir, args.save_fname), 'w') as writer:
         writer.write(json.dumps(aug_delta_dict, indent=4))
-    
-    # df = pd.DataFrame(aug_delta_dict)
-    # df.to_csv(os.path.join(f'{args.datamap_dir}, {args.save_fname}'))
 
     return
 

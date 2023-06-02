@@ -1,2 +1,6 @@
 cifar10_dataset/
 models/
+Intel/
+**/__pycache__
+datasets/
+experiments/

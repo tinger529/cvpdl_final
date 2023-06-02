@@ -1,0 +1,29 @@
+color_jitter
+[ Train | 001/020 ] loss = 1.13405, acc = 0.73676
+Find best acc at epoch 1
+[ Train | 002/020 ] loss = 0.99295, acc = 0.75399
+Find best acc at epoch 2
+[ Train | 003/020 ] loss = 1.04181, acc = 0.72929
+[ Train | 004/020 ] loss = 0.99715, acc = 0.72323
+[ Train | 005/020 ] loss = 1.01064, acc = 0.71355
+[ Train | 006/020 ] loss = 0.97288, acc = 0.71989
+[ Train | 007/020 ] loss = 0.79190, acc = 0.79641
+Find best acc at epoch 7
+[ Train | 008/020 ] loss = 0.71867, acc = 0.82382
+Find best acc at epoch 8
+[ Train | 009/020 ] loss = 0.74184, acc = 0.79826
+[ Train | 010/020 ] loss = 0.72610, acc = 0.79912
+[ Train | 011/020 ] loss = 0.70340, acc = 0.80631
+[ Train | 012/020 ] loss = 0.67670, acc = 0.81841
+[ Train | 013/020 ] loss = 0.68054, acc = 0.80431
+[ Train | 014/020 ] loss = 0.71677, acc = 0.79670
+[ Train | 015/020 ] loss = 0.71101, acc = 0.78452
+[ Train | 016/020 ] loss = 0.62105, acc = 0.83713
+Find best acc at epoch 16
+[ Train | 017/020 ] loss = 0.65555, acc = 0.83806
+Find best acc at epoch 17
+[ Train | 018/020 ] loss = 0.57438, acc = 0.84233
+Find best acc at epoch 18
+[ Train | 019/020 ] loss = 0.62581, acc = 0.83670
+[ Train | 020/020 ] loss = 0.64116, acc = 0.83564
+14034 14034 14034

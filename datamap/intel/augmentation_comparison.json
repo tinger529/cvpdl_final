@@ -1,0 +1,38 @@
+{
+    "random_rotation": {
+        "conf_delta": -0.014527082998441892,
+        "var_delta": -0.009248221045548859
+    },
+    "auto_contrast": {
+        "conf_delta": 0.0009267655070153863,
+        "var_delta": -0.0006928005558820057
+    },
+    "posterize": {
+        "conf_delta": -0.004604319348962487,
+        "var_delta": -0.02172986524531232
+    },
+    "color_jitter": {
+        "conf_delta": 0.0022958438822272584,
+        "var_delta": -0.017665718943247602
+    },
+    "sharpness": {
+        "conf_delta": 0.008116610939928931,
+        "var_delta": -0.011324630234427839
+    },
+    "equalize": {
+        "conf_delta": -0.014578009068615732,
+        "var_delta": 0.010337377476404242
+    },
+    "solarize": {
+        "conf_delta": -0.00953165146472084,
+        "var_delta": 0.011281815507850965
+    },
+    "auto_augment": {
+        "conf_delta": -0.015761732546337625,
+        "var_delta": -0.018819171842122097
+    },
+    "translate_fill_x": {
+        "conf_delta": 0.011983100418479891,
+        "var_delta": -0.01908997767181165
+    }
+}
