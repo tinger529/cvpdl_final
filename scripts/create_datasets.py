@@ -18,6 +18,7 @@
 """
 
 import collections
+import glob
 import gzip
 import os
 import tarfile
@@ -32,6 +33,9 @@ from tqdm import trange
 
 from libml import data as libml_data
 from libml.utils import EasyDict
+
+import cv2
+from PIL import Image
 
 URLS = {
     'svhn': 'http://ufldl.stanford.edu/housenumbers/{}_32x32.mat',
@@ -104,6 +108,100 @@ def _load_stl10():
     return dict(train=train_set, test=test_set, unlabeled=unlabeled_set,
                 files=[EasyDict(filename="stl10_fold_indices.txt", data=fold_indices)])
 
+def _load_intel():
+    def unflatten(images):
+        # down sample to 32x32
+        out = np.zeros((images.shape[0], 32, 32, 3), dtype=np.uint8)
+        for i, img in enumerate(images):
+            img = cv2.resize(img, (32, 32))
+            # transpose to 3, 32, 32
+            out[i] = img
+        return out
+
+    # open image direcctories
+    pth = './Intel'
+    train_dir = os.path.join(pth, 'seg_train/seg_train')
+    test_dir = os.path.join(pth, 'seg_test/seg_test')
+
+    train_data_batches, train_data_labels = [], []
+    test_data_batches, test_data_labels = [], []
+
+    # get all images and labels
+    for folder in os.listdir(train_dir):
+        for image in os.listdir(os.path.join(train_dir, folder)):
+            train_data_batches.append(os.path.join(train_dir, folder, image))
+            train_data_labels.append(folder)
+    
+    for folder in os.listdir(test_dir):
+        for image in os.listdir(os.path.join(test_dir, folder)):
+            test_data_batches.append(os.path.join(test_dir, folder, image))
+            test_data_labels.append(folder)
+
+    # map labels to integers
+    label_map = {label: i for i, label in enumerate(set(train_data_labels))}
+    train_data_labels = [label_map[label] for label in train_data_labels]
+    test_data_labels = [label_map[label] for label in test_data_labels]
+
+    # change image path to image data
+    train_data_batches = [cv2.imread(image) for image in train_data_batches]
+    test_data_batches = [cv2.imread(image) for image in test_data_batches]
+    
+    # create sets
+    train_set = {'images': np.array(train_data_batches),
+                 'labels': np.array(train_data_labels)}
+    test_set = {'images': np.array(test_data_batches),
+                'labels': np.array(test_data_labels)}
+    
+    # flatten images
+    train_set['images'] = _encode_png(unflatten(train_set['images']))
+    test_set['images'] = _encode_png(unflatten(test_set['images']))
+
+    return dict(train=train_set, test=test_set)
+
+def _load_ahe():
+    def unflatten(images):                      
+        print(images.shape)
+        return images                           
+        
+    labels = os.listdir('../ahe/train')
+    label2id = {k: v for v, k in enumerate(sorted(labels))}
+    print(label2id)
+
+    train_img_paths = glob.glob('../ahe/train/**/*.jpg', recursive=True)
+    train_imgs = list()
+    train_labels = list()
+
+    for img_path in train_img_paths:
+        img = cv2.imread(img_path)
+        img = cv2.resize(img, (32, 32))
+        train_imgs.append(img)        # (32, 32, 3)
+
+        label = img_path.split('/')[-2]
+        train_labels.append(label2id[label])
+    
+    train_set = {
+        'images': _encode_png(np.array(train_imgs)),
+        'labels': np.array(train_labels)
+    }
+
+    test_img_paths = glob.glob('../ahe/test/**/*.jpg', recursive=True)
+    test_imgs = list()
+    test_labels = list()
+
+    for img_path in test_img_paths:
+        img = cv2.imread(img_path)
+        img = cv2.resize(img, (32, 32))
+        test_imgs.append(img)                       # (32, 32, 3)
+
+        label = img_path.split('/')[-2]
+        test_labels.append(label2id[label])
+
+    test_set = {
+        'images': _encode_png(np.array(test_imgs)),
+        'labels': np.array(test_labels)
+    }
+
+    return dict(train=train_set, test=test_set)
 
 def _load_cifar10():
     def unflatten(images):
@@ -221,10 +319,12 @@ def _is_installed_folder(name, folder):
 
 
 CONFIGS = dict(
-    cifar10=dict(loader=_load_cifar10, checksums=dict(train=None, test=None)),
-    cifar100=dict(loader=_load_cifar100, checksums=dict(train=None, test=None)),
-    svhn=dict(loader=_load_svhn, checksums=dict(train=None, test=None, extra=None)),
-    stl10=dict(loader=_load_stl10, checksums=dict(train=None, test=None)),
+    intel=dict(loader=_load_intel, checksums=dict(train=None, test=None)),
+    # ahe=dict(loader=_load_ahe, checksums=dict(train=None, test=None)),
+    # cifar10=dict(loader=_load_cifar10, checksums=dict(train=None, test=None)),
+    # cifar100=dict(loader=_load_cifar100, checksums=dict(train=None, test=None)),
+    # svhn=dict(loader=_load_svhn, checksums=dict(train=None, test=None, extra=None)),
+    # stl10=dict(loader=_load_stl10, checksums=dict(train=None, test=None)),
 )
 
 

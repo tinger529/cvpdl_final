@@ -44,6 +44,7 @@ class CTAugment:
     def __init__(self, depth=2, th=0.85, decay=0.99):
         self.decay = decay
         self.depth = depth
+        #　self.depth = np.random.randint(low=0, high=3) (tmux 11)
         self.th = th
         self.rates = {}
         for k, op in OPS.items():

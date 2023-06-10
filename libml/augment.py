@@ -34,12 +34,30 @@ POLICIES = EasyDict(cifar10=policies.cifar10_policies(),
                     svhn=policies.svhn_policies(),
                     svhn_noextra=policies.svhn_policies())
 
-RANDOM_POLICY_OPS = (
+RANDOM_POLICY_OPS = (                                       # Original
     'Identity', 'AutoContrast', 'Equalize', 'Rotate',
     'Solarize', 'Color', 'Contrast', 'Brightness',
     'Sharpness', 'ShearX', 'TranslateX', 'TranslateY',
     'Posterize', 'ShearY'
 )
+
+# RANDOM_POLICY_OPS = (                                       # Intel Strong (tmux 14)
+#     'AutoContrast', 'Equalize', 'Solarize'
+# )
+
+# RANDOM_POLICY_OPS = (                                       # Intel Weak (tmux 15)
+#     'TranslateX', 'TranslateY', 'Color', 'Sharpness', 'Posterize'
+# )
+
+
+# RANDOM_POLICY_OPS = (                                       # Cifat10 Strong
+#     'Equalize', 'Sharpness', 'Solarize'
+# )
+
+# RANDOM_POLICY_OPS = (                                       # Cifar10 Weak
+#     'AutoContrast', 'Posterize', 'TranslateX', 'TranslateY',
+# )
+
 AUGMENT_ENUM = 'd x m aa aac ra rac'.split() + ['r%d_%d_%d' % (nops, mag, cutout) for nops, mag, cutout in
                                                 itertools.product(range(1, 5), range(1, 16), range(0, 100, 25))] + [
                    'rac%d' % (mag) for mag in range(1, 10)]
@@ -340,6 +358,8 @@ class AugmentPoolCTA(AugmentPool):
 
 
 DEFAULT_AUGMENT = EasyDict(
+    ahe=AugmentPair(tf=lambda x: dict(image=Primitives.ms(4)(x), label=x['label'], index=x.get('index', -1)),
+                        numpy=AugmentPool),
     cifar10=AugmentPair(tf=lambda x: dict(image=Primitives.ms(4)(x), label=x['label'], index=x.get('index', -1)),
                         numpy=AugmentPool),
     cifar100=AugmentPair(tf=lambda x: dict(image=Primitives.ms(4)(x), label=x['label'], index=x.get('index', -1)),
@@ -352,6 +372,8 @@ DEFAULT_AUGMENT = EasyDict(
                      numpy=AugmentPool),
     svhn_noextra=AugmentPair(tf=lambda x: dict(image=Primitives.s(4)(x), label=x['label'], index=x.get('index', -1)),
                              numpy=AugmentPool),
+    intel=AugmentPair(tf=lambda x: dict(image=Primitives.ms(4)(x), label=x['label'], index=x.get('index', -1)),
+                        numpy=AugmentPool),
 )
 AUTO_AUGMENT = EasyDict({
     k: AugmentPair(tf=v.tf, numpy=functools.partial(AugmentPoolAA, policy_group=k))
